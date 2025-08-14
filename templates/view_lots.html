@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Available Parking Lots | Smart Parking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <style>
+    body {
+      background: linear-gradient(135deg, #1e1e1e, #34495e);
+      font-family: 'Segoe UI', sans-serif;
+      color: #fff;
+      padding: 30px 15px;
+      min-height: 100vh;
+    }
+
+    .glass-container {
+      background: rgba(255, 255, 255, 0.08);
+      backdrop-filter: blur(18px);
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 900px;
+      margin: auto;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    h3 {
+      color: #f1c40f;
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .list-group-item {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(6px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      margin-bottom: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      color: #fff;
+    }
+
+    .list-group-item:hover {
+      background-color: rgba(255, 255, 255, 0.08);
+    }
+
+    .btn-primary {
+      background-color: #f1c40f;
+      border: none;
+      color: #2c3e50;
+      font-weight: 500;
+      padding: 6px 16px;
+    }
+
+    .btn-primary:hover {
+      background-color: #d4ac0d;
+      color: #000;
+    }
+
+    @media (max-width: 576px) {
+      .glass-container {
+        padding: 25px;
+      }
+
+      .btn {
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .list-group-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="glass-container">
+    <h3><i class="fas fa-map-marked-alt me-2"></i>Available Parking Lots</h3>
+    <ul class="list-group">
+      {% for lot in lots %}
+      <li class="list-group-item">
+        <div>
+          <strong>{{ lot.prime_location_name }}</strong><br />
+          <small>{{ lot.address }}</small>
+        </div>
+        <a href="{{ url_for('user_routes.view_spots', lot_id=lot.id) }}" class="btn btn-primary btn-sm mt-2 mt-md-0">
+          <i class="fas fa-parking"></i> View Spots
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

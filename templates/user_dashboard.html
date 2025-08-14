@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>User Dashboard | Smart Parking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      background: linear-gradient(135deg, #1a1a1a, #2e2e2e);
+      font-family: 'Inter', sans-serif;
+      padding-top: 80px;
+      color: #f5f6fa;
+    }
+
+    .card-glass {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 18px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+      padding: 24px;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .card-glass:hover {
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .btn-book {
+      background-color: #f1c40f;
+      border-radius: 14px;
+      color: #000;
+      font-weight: 600;
+      padding: 8px 18px;
+    }
+
+    .btn-book:hover {
+      background-color: #d4ac0d;
+    }
+
+    .btn-release {
+      background-color: #ff5e5e;
+      border-radius: 14px;
+      color: #fff;
+      font-weight: 600;
+      padding: 8px 18px;
+    }
+
+    .btn-release:hover {
+      background-color: #e74c3c;
+    }
+
+    .table {
+      color: #ffffff;
+      border-radius: 12px;
+    }
+
+    .table th,
+    .table td {
+      color: #ffffff !important;
+      vertical-align: middle;
+      border-color: rgba(255, 255, 255, 0.1);
+      background-color: rgba(0, 0, 0, 0.3);
+    }
+
+    .table thead th {
+      font-weight: 600;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .table-container {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 16px;
+      padding: 16px;
+      backdrop-filter: blur(14px);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.25);
+    }
+
+    .table tbody tr:hover {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    .top-buttons {
+      position: fixed;
+      top: 15px;
+      right: 30px;
+      z-index: 1000;
+    }
+
+    .top-buttons a {
+      margin-left: 10px;
+      padding: 10px 18px;
+      border-radius: 30px;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.9rem;
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.15);
+    }
+
+    .top-buttons a:hover {
+      background-color: rgba(255,255,255,0.2);
+      color: #f1c40f;
+    }
+
+    .text-muted {
+      color: #aaa !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-buttons">
+  <a href="{{ url_for('user_routes.reservation_history') }}"><i class="fas fa-clock me-1"></i> My Booking</a>
+  <a href="{{ url_for('auth_routes.logout') }}"><i class="fas fa-sign-out-alt me-1"></i> Logout</a>
+</div>
+
+<div class="container">
+  <!-- Recent Parking History -->
+  <div class="card-glass">
+    <h5>Recent Reservations</h5>
+    <div class="table-container mt-3">
+      <div class="table-responsive">
+        <table class="table table-bordered mb-0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Location</th>
+              <th>Vehicle No</th>
+              <th>Action</th>
+              <th>Status</th>
+              <th>Price/hr (₹)</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in reservations %}
+            <tr>
+              <td>{{ record.id }}</td>
+              <td>{{ record.spot.lot.prime_location_name }}</td>
+              <td>{{ record.vehicle_number }}</td>
+              <td>
+                <a href="{{ url_for('user_routes.release_spot_form', reservation_id=record.id) }}" class="btn btn-release btn-sm">Release</a>
+              </td>
+              <td>
+                {% if record.end_time %}
+                  <span class="badge bg-secondary">Released</span>
+                {% else %}
+                  <span class="badge bg-success">Active</span>
+                {% endif %}
+              </td>
+              <td>{{ record.spot.lot.price_per_hour or 'N/A' }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- Available Parking Lots -->
+  <div class="card-glass">
+    <h5>Available Parking Lots</h5>
+    {% if lots %}
+    <div class="table-container mt-3">
+      <div class="table-responsive">
+        <table class="table table-bordered mb-0">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Address</th>
+              <th>Availability</th>
+              <th>Price/hr (₹)</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for lot in lots %}
+            <tr>
+              <td>{{ lot.id }}</td>
+              <td>{{ lot.address }}</td>
+              <td>{{ lot.max_spots }}</td>
+              <td>{{ lot.price_per_hour }}</td>
+              <td>
+                <form action="{{ url_for('user_routes.auto_book_spot', lot_id=lot.id) }}" method="POST" class="d-inline">
+                  <input type="text" name="vehicle_number" placeholder="Vehicle No." required class="form-control form-control-sm mb-1" />
+                  <button type="submit" class="btn btn-book btn-sm">Book</button>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+    {% else %}
+    <p class="text-muted">No parking lots available.</p>
+    {% endif %}
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Smart Parking</title>
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  />
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e1e1e, #2c2c2c);
+      color: white;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .navbar {
+      display: flex;
+      align-items: center;
+      background-color: #111;
+      padding: 15px 25px;
+      font-weight: bold;
+      font-size: 20px;
+      color: #facc15;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .logo span {
+      margin-left: 10px;
+    }
+
+    .main {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .card {
+      background-color: rgba(255, 255, 255, 0.06);
+      border-radius: 25px;
+      padding: 50px 40px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(15px);
+      text-align: center;
+      max-width: 600px;
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .card h1 {
+      font-size: 36px;
+      font-weight: 700;
+      color: #facc15;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .card p {
+      font-size: 16px;
+      color: #d1d5db;
+      margin-bottom: 30px;
+    }
+
+    .btn-container {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-size: 16px;
+      font-weight: 500;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn-login {
+      background-color: white;
+      color: black;
+    }
+
+    .btn-register {
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="navbar">
+    <div class="logo">
+      <i class="fas fa-car-side" style="color: #facc15;"></i>
+      <span>Smart Parking</span>
+    </div>
+  </div>
+
+  <div class="main">
+    <div class="card">
+      <h1>
+        <i class="fas fa-car-side"></i>
+        Smart Parking
+      </h1>
+      <p>Minimal. Fast. Effortless.</p>
+      <div class="btn-container">
+        <button class="btn btn-login" onclick="window.location.href='/login'">Login</button>
+        <button class="btn btn-register" onclick="window.location.href='/user/register'">Register</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
