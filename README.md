@@ -1,97 +1,90 @@
-#  Vehicle Parking Management System - MAD-1 Project
+# Vehicle Parking Management System
 
-## Overview
+A Flask-based parking management web application with separate admin and user workflows. The project demonstrates backend routing, database modeling, authentication, CRUD operations, and a responsive Bootstrap UI.
 
-This project is a **Smart Parking Management System** developed using **Flask** as part of the *Modern Application Development - 1 (MAD-1)* course. It offers two separate dashboards for **Admins** and **Users**, supporting parking lot management, user authentication, and real-time spot reservation.
+## Highlights
 
----
+- Role-based login for admin and users
+- User registration and session-based authentication
+- Admin dashboard for parking lots, parking spots, users, and reservations
+- Parking lot CRUD with price, location, image, and capacity fields
+- Parking spot creation, editing, deletion, and availability tracking
+- User dashboard for viewing lots, reserving spots, and checking booking history
+- SQLite database for local development with Flask-SQLAlchemy models
+- Flask-Migrate setup for schema migrations
 
-## Features
+## Tech Stack
 
-###  User Functionality
+- Python
+- Flask
+- Flask-SQLAlchemy
+- Flask-Migrate
+- SQLite
+- Jinja templates
+- Bootstrap
 
-* Register, login, and logout
-* View all available parking lots
-* Automatically book the first available spot by entering vehicle number
-* View their own reservation history
+## Local Setup
 
-### Admin Functionality
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+python app.py
+```
 
-* Secure admin login
-* Add, edit, and delete parking lots
-* Add, edit, and delete parking spots within lots
-* View list of all registered users
-* View all reservations made by users
+Open the app at `http://127.0.0.1:5000`.
 
----
-## Technologies Used
+For local development, the app creates the database tables automatically when you run `python app.py`.
 
-- **Flask**: Backend web framework
-- **SQLAlchemy & Flask-SQLAlchemy**: ORM for database management
-- **SQLite**: Lightweight relational database engine
-- **Bootstrap**: Responsive frontend design via CDN
+## Local Admin Login
 
----
+By default, the app creates a local development admin account if one does not already exist.
 
-##  Milestones Completed
+```text
+Username: admin
+Password: admin123
+```
 
--  GitHub Repository Setup  
--  Database Models and Schema Setup  
--  User Authentication System  
--  User Registration System  
--  User Authentication & Session Management  
--  Admin Dashboard & Management  
--  Parking Spot Reservation  
--  Release Parking Spot Functionality  
+You can override these values before running the app:
 
----
-
-## Models
-
-- **Admin:** Stores admin username and password for authentication.
-- **User:** Contains user details like username, email, address, pincode, and password.
-- **ParkingLot:** Represents a parking lot with a prime location name and address.
-- **ParkingSpot:** Represents individual spots within a parking lot. Tracks spot number, availability, and associated lot.
-- **Reservation:** Records reservations made by users, including user ID, spot ID, vehicle number, and timestamp.
-
----
+```bash
+set SECRET_KEY=your-secret-key
+set ADMIN_USERNAME=admin
+set ADMIN_PASSWORD=your-strong-password
+python app.py
+```
 
 ## Project Structure
 
-```
-PARKING_APP_23F2003724/
-├── app.py
-├── parking.db
-├── controllers/
-│   ├── admin_routes.py
-│   ├── auth_routes.py
-│   └── user_routes.py
-├── models/
-│   └── model.py
-├── templates/
-│   ├── add_parkinglot.html
-│   ├── admin_dashboard.html
-│   ├── admin_profile.html
-│   ├── edit_parkinglot.html
-│   ├── edit_profile.html
-│   ├── edit_spot.html
-│   ├── home.html
-│   ├── login.html
-│   ├── manage_spots.html
-│   ├── release_spot.html
-│   ├── reservation_history.html
-│   ├── summary.html
-│   ├── user_bookings.html
-│   ├── user_dashboard.html
-│   ├── user_register.html
-│   ├── users.html
-│   ├── view_lots.html
-│   └── view_spots.html
-└── parking_app_23f2003724.code-workspace
+```text
+.
+|-- app.py
+|-- controllers/
+|   |-- admin_routes.py
+|   |-- auth_routes.py
+|   `-- user_routes.py
+|-- models/
+|   `-- model.py
+|-- templates/
+|-- static/
+|   `-- uploads/
+|-- migrations/
+|-- requirements.txt
+|-- Procfile
+`-- README.md
 ```
 
----
+## What This Project Shows
 
-##  Academic Note
+This project is useful as a beginner Python backend portfolio project because it includes practical web-development concepts: route organization with blueprints, relational data models, password hashing, server-side sessions, CRUD screens, file uploads, and local deployment setup.
 
-This project was created solely for academic purposes as part of the **Modern Application Development - 1 (MAD-1)** curriculum under the **B.Sc. in Data Science and Applications, IIT Madras**.
+## Next Improvements
+
+- Add automated tests for authentication and reservation flows
+- Move local admin creation into a Flask CLI command
+- Add form validation helpers to reduce repeated checks
+- Add production deployment notes with environment variables
+
+## Academic Context
+
+Built as part of Modern Application Development coursework while learning practical Flask application development.
