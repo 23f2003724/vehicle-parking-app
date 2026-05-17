@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+
+# Environment and local data
+.env
+.env.*
+instance/
+parking.db
+*.sqlite
+*.sqlite3
+
+# Runtime uploads
+static/uploads/*
+!static/uploads/.gitkeep
+
+# Editor and OS files
+.vscode/
+*.code-workspace
+.DS_Store
